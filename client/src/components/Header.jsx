@@ -1,7 +1,22 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { useAppContext } from "../context/AppContext";
+import { useRef } from "react";
 
 const Header = () => {
+  const { setInput, input } = useAppContext();
+  const inputRef = useRef();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setInput(inputRef.current.value);
+  };
+
+  const onClear = () => {
+    setInput("");
+    inputRef.current.value = "";
+  };
+
   return (
     <div className="mx-8 sm:mx-16 xl:mx-24 relative">
       {/* //->header content */}
@@ -22,13 +37,24 @@ const Header = () => {
           your story starts right here.
         </p>
 
-        <form className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hidden">
+        <form
+          onSubmit={submitHandler}
+          className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hidden relative"
+        >
           <input
+            ref={inputRef}
             type="text"
-            required
             placeholder="Search for blogs"
-            className="w-full pl-4 outline-none"
+            className="w-full pl-4 outline-none "
           />
+          {input && (
+            <span
+              onClick={onClear}
+              className="border font-light text-xs cursor-pointer absolute right-[25%] top-[30%]"
+            >
+              ❌
+            </span>
+          )}
 
           <input
             type="submit"

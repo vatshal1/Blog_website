@@ -15,6 +15,7 @@ export const AppProvider = ({ children }) => {
     try {
       const { data } = await axios.get("/api/blog/all");
       data.success ? setBlogs(data.blogs) : toast.error(data.message);
+      // setBlogs(blog_data); //! dummy data
     } catch (error) {
       toast.error(error.message);
     }

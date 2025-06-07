@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { comments_data } from "../../assets/assets";
 import CommentTableItem from "../../components/Admin/CommentTableItem";
+import toast from "react-hot-toast";
+import { useAppContext } from "../../context/AppContext";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
   const [filter, setFilter] = useState("Not Approved");
 
+  const { axios } = useAppContext();
+
   const fetchComments = async () => {
-    setComments(comments_data);
+    try {
+      const { data } = await axios.get("/api/admin/comments");
+      data.success ? setComments(data.comments) : toast.error(data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -44,7 +53,10 @@ const Comments = () => {
           <thead className="text-xs text-gray-700 text-left uppercase">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Blog Title & Comment
+                Blog Title
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Comment
               </th>
               <th scope="col" className="px-6 py-3 max-sm:hidden">
                 Date
