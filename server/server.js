@@ -12,7 +12,15 @@ const app = express();
 connectDB();
 
 //-> Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://blog-website-frontend-fslz7m94u-vatshal-negis-projects.vercel.app/",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 //-> route handling
