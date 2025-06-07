@@ -1,7 +1,9 @@
 import fs from "fs";
-import ImageKit from "imagekit";
+
 import Blog from "../models/Blog.js";
 import Comment from "../models/Comment.js";
+import imagekit from "../config/imageKit.js";
+import main from "../config/gemini.js";
 
 export const addBlog = async (req, res) => {
   try {
@@ -25,14 +27,14 @@ export const addBlog = async (req, res) => {
     const fileBuffer = fs.readFileSync(imageFile.path);
 
     //-> upload Image to ImageKit
-    const response = await ImageKit.upload({
+    const response = await imagekit.upload({
       file: fileBuffer,
       fileName: imageFile.originalname,
       folder: "/blogs",
     });
 
     //-> optimization through imageKit URL transformation
-    const optimizedImageUrl = ImageKit.url({
+    const optimizedImageUrl = imagekit.url({
       path: response.filePath,
       transformation: [
         { quality: "auto" },
@@ -47,13 +49,13 @@ export const addBlog = async (req, res) => {
       subTitle: subTitle?.trim(),
       description: description.trim(),
       category,
-      images: optimizedImageUrl,
+      image: optimizedImageUrl,
       isPublished,
     });
 
     res.json({ success: true, message: "Blog added Successfully" });
   } catch (error) {
-    res.status(500).json({ success: false, message: "failed to add blog" });
+    res.json({ success: false, message: "Failed to add blog" });
   }
 };
 
@@ -74,11 +76,8 @@ export const getBlogById = async (req, res) => {
     const blog = await Blog.findById(blogId);
 
     if (!blog) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Blog not found" });
+      return res.json({ success: false, message: "Blog not found" });
     }
-
     res.json({ success: true, blog });
   } catch (error) {
     res.status(500).json({ success: false, message: "failed to fetch blog" });
@@ -92,9 +91,7 @@ export const deleteBlogById = async (req, res) => {
     //-> check if blog exists before deleting
     const blog = await Blog.findById(id);
     if (!blog) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Blog not found" });
+      return res.json({ success: false, message: "Blog not found" });
     }
 
     //-> Delete the blog
@@ -118,9 +115,7 @@ export const togglePublish = async (req, res) => {
 
     //-> Check if blog exists
     if (!blog) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Blog not found" });
+      return res.json({ success: false, message: "Blog not found" });
     }
 
     //-> Toggle and save
@@ -135,9 +130,12 @@ export const togglePublish = async (req, res) => {
   }
 };
 
+//_ comments
+
 export const addComment = async (req, res) => {
   try {
     const { blog, name, content } = req.body;
+
     await Comment.create({ blog, name, content, isApproved: false });
     res.json({ success: true, message: "Comment added for review" });
   } catch (error) {
@@ -154,6 +152,18 @@ export const getBlogComments = async (req, res) => {
     }).sort({ createdAt: -1 });
 
     res.json({ success: true, comments });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export const generateContent = async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const content = await main(
+      `Generate a blog content for the topic in simple text format. Topic is ${prompt}`
+    );
+    res.json({ success: true, content });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }

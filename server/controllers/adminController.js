@@ -36,17 +36,7 @@ export const getAllBlogsAdmin = async (req, res) => {
   }
 };
 
-export const getAllComments = async (req, res) => {
-  try {
-    const comments = await Comment.find({})
-      .populate("blog")
-      .sort({ createdAt: -1 });
-
-    res.json({ success: true, comments });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+//_ Dashboard
 
 export const getDashboard = async (req, res) => {
   try {
@@ -59,6 +49,20 @@ export const getDashboard = async (req, res) => {
     res.json({ success: true, dashboardData });
   } catch (error) {
     res.json({ success: false, message: error.message });
+  }
+};
+
+//_ Comments
+
+export const getAllComments = async (req, res) => {
+  try {
+    const comments = await Comment.find({})
+      .populate("blog")
+      .sort({ createdAt: -1 });
+
+    res.json({ success: true, comments });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
