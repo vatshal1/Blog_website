@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { comments_data } from "../../assets/assets";
+import { useEffect, useState } from "react";
 import CommentTableItem from "../../components/Admin/CommentTableItem";
 import toast from "react-hot-toast";
 import { useAppContext } from "../../context/AppContext";

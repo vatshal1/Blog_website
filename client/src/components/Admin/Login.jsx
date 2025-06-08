@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 
@@ -58,7 +58,7 @@ const Login = () => {
                   type="email"
                   value={email}
                   required
-                  placeholder="Enter your Email Id"
+                  placeholder="Email Id -> admin@example.com"
                   onChange={(e) => setEmail(e.target.value)}
                   className="border-b-2 border-gray-300 py-2  outline-none mb-6 w-full"
                 />
@@ -73,7 +73,7 @@ const Login = () => {
                   type="password"
                   value={password}
                   required
-                  placeholder="Enter your password"
+                  placeholder="password -> password123"
                   onChange={(e) => setPassword(e.target.value)}
                   className="border-b-2 border-gray-300 py-2 outline-none mb-6 w-full"
                 />

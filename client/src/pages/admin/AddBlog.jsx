@@ -49,6 +49,7 @@ const AddBlog = () => {
         toast.success(data.message);
         setImage(false);
         setTitle("");
+        setSubTitle("");
         quillRef.current.root.innerHTML = "";
         setCategory("Startup");
       } else {
@@ -166,14 +167,13 @@ const AddBlog = () => {
             </div>
           )}
 
-          <button
+          <input
             type="button"
             onClick={generateContent}
             disabled={isLoading}
-            className="absolute -bottom-10 right-2 ml-2  text-xs text-white bg-black/70 px-4 py-1.5 rounded hover:underline cursor-pointer"
-          >
-            Generate with AI
-          </button>
+            className="absolute -bottom-10 right-2 text-center text-xs text-white bg-black/70 py-1.5 px-4 rounded hover:underline cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            value={isLoading ? "Generating....." : "Generate with AI"}
+          />
         </div>
 
         <p className="mb-2">Blog Category</p>
