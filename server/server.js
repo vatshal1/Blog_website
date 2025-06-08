@@ -12,18 +12,10 @@ const app = express();
 connectDB();
 
 //-> Middlewares
-app.use(
-  cors({
-    origin: [
-      "https://blog-website-frontend-sigma.vercel.app/",
-      "http://localhost:3000",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 
-//-> route handling
+// //-> route handling
 app.use("/", (req, res, next) => {
   console.log(`url -> ${req.url} and method -> ${req.method}`);
   next();
