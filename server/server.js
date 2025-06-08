@@ -15,7 +15,7 @@ connectDB();
 app.use(
   cors({
     origin: [
-      "https://blog-website-frontend-fslz7m94u-vatshal-negis-projects.vercel.app/",
+      "https://blog-website-frontend-sigma.vercel.app/",
       "http://localhost:3000",
     ],
     credentials: true,
