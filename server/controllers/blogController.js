@@ -157,6 +157,7 @@ export const getBlogComments = async (req, res) => {
   }
 };
 
+//_ content through gemini
 export const generateContent = async (req, res) => {
   try {
     const { prompt } = req.body;
