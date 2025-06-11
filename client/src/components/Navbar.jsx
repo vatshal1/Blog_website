@@ -1,4 +1,3 @@
-import React from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router";
 import { useAppContext } from "../context/AppContext";

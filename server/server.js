@@ -8,9 +8,6 @@ import blogRouter from "./routes/blogRoutes.js";
 
 const app = express();
 
-//-> connect to MongoDB
-connectDB();
-
 //-> Middlewares
 app.use(cors());
 app.use(express.json());
@@ -31,8 +28,15 @@ app.use("/api/blog", blogRouter);
 //-> server running
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+//-> connect to MongoDB and then running server
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running at http://localhost:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
 
 export default app;
