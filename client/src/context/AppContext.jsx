@@ -11,6 +11,7 @@ export const AppProvider = ({ children }) => {
   const [blogs, setBlogs] = useState([]);
   const [input, setInput] = useState("");
 
+  //-> fetch all published blogs
   const fetchBlogs = async () => {
     try {
       const { data } = await axios.get("/api/blog/all");

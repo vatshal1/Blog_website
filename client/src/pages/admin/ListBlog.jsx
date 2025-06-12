@@ -8,6 +8,7 @@ const ListBlog = () => {
 
   const { axios } = useAppContext();
 
+  //-> fetching list of all blogs for admin
   const fetchBlogs = async () => {
     try {
       const { data } = await axios.get("api/admin/blogs");

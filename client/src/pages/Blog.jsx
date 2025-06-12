@@ -18,6 +18,8 @@ const Blog = () => {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
 
+  //-> functions to fetch data, comments, addComment
+
   const fetchBlogData = async () => {
     try {
       const { data } = await axios.get(`api/blog/${id}`);
@@ -62,7 +64,7 @@ const Blog = () => {
     }
   };
 
-  //-> 'calling all the fetch functions'
+  //-> 'calling all the fetch functions when component mounts'
   useEffect(() => {
     fetchBlogData();
     fetchComments();
@@ -78,7 +80,7 @@ const Blog = () => {
 
       <Navbar />
 
-      {/* //_ Blog heading  */}
+      {/* //-> Blog heading  */}
       <div className="text-center mt-20 text-gray-600">
         <p className="text-primary py-4 font-medium">
           Published on {moment(data.createdAt).format("MMMM DD YYYY")}
@@ -92,7 +94,7 @@ const Blog = () => {
         </p>
       </div>
 
-      {/* //_ Blog content */}
+      {/* //-> Blog content */}
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6">
         <img src={data.image} alt="" className="rounded-3xl mb-5" />
 
