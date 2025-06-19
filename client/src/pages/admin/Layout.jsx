@@ -1,7 +1,11 @@
-import { assets } from "../../assets/assets";
 import { Outlet, useNavigate } from "react-router";
-import Sidebar from "../../components/Admin/Sidebar.jsx";
+import { lazy, Suspense } from "react";
+
+import { assets } from "../../assets/assets";
 import { useAppContext } from "../../context/AppContext.jsx";
+
+const Loader = lazy(() => import("../../components/Loader.jsx"));
+const Sidebar = lazy(() => import("../../components/Admin/Sidebar.jsx"));
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -34,7 +38,9 @@ const Layout = () => {
       </div>
 
       <div className="flex h-[calc(100vh - 70px)]">
-        <Sidebar />
+        <Suspense fallback={Loader}>
+          <Sidebar />
+        </Suspense>
         <Outlet />
       </div>
     </>

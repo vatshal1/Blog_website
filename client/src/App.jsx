@@ -1,15 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import "quill/dist/quill.snow.css";
 import { Toaster } from "react-hot-toast";
+import { lazy, Suspense } from "react";
 
-import Home from "./pages/Home";
-import Blog from "./pages/Blog";
-import Layout from "./pages/admin/Layout";
-import Dashboard from "./pages/admin/Dashboard";
-import AddBlog from "./pages/admin/AddBlog";
-import ListBlog from "./pages/admin/ListBlog";
-import Comments from "./pages/admin/Comments";
-import Login from "./components/Admin/Login";
+const Home = lazy(() => import("./pages/Home"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Layout = lazy(() => import("./pages/admin/Layout"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const AddBlog = lazy(() => import("./pages/admin/AddBlog"));
+const ListBlog = lazy(() => import("./pages/admin/ListBlog"));
+const Comments = lazy(() => import("./pages/admin/Comments"));
+const Login = lazy(() => import("./components/Admin/Login"));
+
 import { useAppContext } from "./context/AppContext";
 
 function App() {
@@ -19,31 +21,56 @@ function App() {
   const appRouter = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: (
+        <Suspense>
+          <Home />
+        </Suspense>
+      ),
     },
     {
       path: "/blog/:id",
-      element: <Blog />,
+      element: (
+        <Suspense>
+          <Blog />
+        </Suspense>
+      ),
     },
     {
       path: "/admin",
-      element: token ? <Layout /> : <Login />,
+      element: <Suspense>{token ? <Layout /> : <Login />}</Suspense>,
       children: [
         {
           index: true,
-          element: <Dashboard />,
+          element: (
+            <Suspense>
+              {" "}
+              <Dashboard />
+            </Suspense>
+          ),
         },
         {
           path: "addBlog",
-          element: <AddBlog />,
+          element: (
+            <Suspense>
+              <AddBlog />
+            </Suspense>
+          ),
         },
         {
           path: "listBlog",
-          element: <ListBlog />,
+          element: (
+            <Suspense>
+              <ListBlog />
+            </Suspense>
+          ),
         },
         {
           path: "comments",
-          element: <Comments />,
+          element: (
+            <Suspense>
+              <Comments />
+            </Suspense>
+          ),
         },
       ],
     },

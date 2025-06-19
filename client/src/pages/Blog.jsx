@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import toast from "react-hot-toast";
 import axios from "axios";
 import moment from "moment";
 
 import { assets } from "../assets/assets";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import Loader from "../components/Loader";
+
+const Navbar = lazy(() => import("../components/Navbar"));
+const Footer = lazy(() => import("../components/Footer"));
+const Loader = lazy(() => import("../components/Loader"));
 
 const Blog = () => {
   const { id } = useParams();
@@ -90,7 +91,7 @@ const Blog = () => {
         </h1>
         <h2 className="my-5 max-w-lg truncate mx-auto">{data.subTitle}</h2>
         <p className="inline-block py-1 px-4 rounded-full mb-6 border text-sm border-primary/35 bg-primary/5 font-medium text-primary">
-          Michael Brown
+          Admin
         </p>
       </div>
 
@@ -169,9 +170,15 @@ const Blog = () => {
           </p>
 
           <div className="flex">
-            <img src={assets.facebook_icon} alt="" width={50} />
-            <img src={assets.twitter_icon} alt="" width={50} />
-            <img src={assets.googleplus_icon} alt="" width={50} />
+            <a href="https://www.facebook.com/">
+              <img src={assets.facebook_icon} alt="facebook" width={50} />
+            </a>
+            <a href="https://www.x.com/">
+              <img src={assets.twitter_icon} alt="twitter" width={50} />
+            </a>
+            <a href="https://www.google.com/">
+              <img src={assets.googleplus_icon} alt="google" width={50} />
+            </a>
           </div>
         </div>
       </div>
