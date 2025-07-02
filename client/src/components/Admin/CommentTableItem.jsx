@@ -1,12 +1,10 @@
 import { assets } from "../../assets/assets";
-import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const CommentTableItem = ({ comment, fetchComments }) => {
   const { blog, createdAt, _id } = comment;
   const BlogDate = new Date(createdAt);
-
-  const { axios } = useAppContext();
 
   const approveComment = async () => {
     try {
@@ -46,40 +44,61 @@ const CommentTableItem = ({ comment, fetchComments }) => {
 
   return (
     <tr className=" border-gray-300 ">
+      {/* //-> Blog title column  */}
       <td className="px-6 py-4">
-        <strong className="font-medium text-gray-600">Blog</strong> :{" "}
-        {blog.title} <br /> <br />
-      </td>
-      <td className="px-6 py-4">
-        <strong className="font-medium text-gray-600">Name</strong> :{" "}
-        {comment.name} <br />
-        <strong className="font-medium text-gray-600">Comment</strong> :{" "}
-        {comment.content}
-      </td>
-
-      <td className="px-6 py-4 max-sm:hidden">
-        {BlogDate.toLocaleDateString()}
+        <div className="max-w-xs">
+          <p className="font-medium text-gray-900 truncate" title={blog.title}>
+            {blog.title}
+          </p>
+          <p className="text-xs text-gray-500 mt-1">{blog.category}</p>
+        </div>
       </td>
 
+      {/* //-> comment details column  */}
       <td className="px-6 py-4">
-        <div className="inline-flex items-center gap-4">
+        <div className="max-w-sm">
+          <div className="flex items-center gap-2 mb-2   ">
+            {/* <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center"> */}
+            Username:
+            <span className="font-medium text-primary text-sm">
+              {comment.name}
+            </span>
+          </div>
+          Comment:
+          <span className="text-sm text-gray-600"> {comment.content}</span>
+        </div>
+      </td>
+
+      {/* //-> date column   */}
+      <td className="p-4 text-center hidden sm:table-cell">
+        <span className="text-sm text-gray-500">
+          {BlogDate.toLocaleDateString()}
+        </span>
+      </td>
+
+      {/* //-> Action column  */}
+      <td className="p-4">
+        <div className="flex items-center justify-center gap-2">
           {!comment.isApproved ? (
-            <img
+            <button
               onClick={approveComment}
-              src={assets.tick_icon}
-              className="w-5 hover:scale-110 transition-all cursor-pointer"
-            />
+              className="flex items-center gap-1 px-3 py-1.5 text-xs bg-green-50 text-green-700 border border-green-200 rounded-md hover:bg-green-100 transition-colors"
+              title="Approve"
+            >
+              <img src={assets.tick_icon} className="w-3 h-3" />
+            </button>
           ) : (
-            <p className="text-xs border border-green-600 bg-green-100 text-green-600 rounded-full px-3 py-1">
+            <button className="px-3 py-1.5 text-xs bg-green-50 text-green-700 border border-green-200 rounded-md">
               Approved
-            </p>
+            </button>
           )}
-          <img
+          <button
             onClick={deleteComment}
-            src={assets.bin_icon}
-            alt=""
-            className="w-5 hover:scale-110 transition-all cursor-pointer"
-          />
+            title="Delete"
+            className="flex items-center gap-1 px-2 py-1 text-xs bg-red-50 text-red-700 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
+          >
+            X
+          </button>
         </div>
       </td>
     </tr>

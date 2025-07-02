@@ -1,6 +1,7 @@
 # Blogify - Blog App
 
-A modern, full-stack blog application with an admin dashboard, AI-powered content generation, and comment moderation. Built with React, Node.js, Express, and MongoDB. [live link](https://blog-website-frontend-sigma.vercel.app/)
+A modern, full-stack blog application with an admin dashboard, AI-powered content generation, and comment moderation. Built with React, Node.js, Express, and MongoDB.
+[live link of website](https://blog-website-frontend-sigma.vercel.app/)
 
 ## ✨ Features
 
@@ -42,7 +43,7 @@ A modern, full-stack blog application with an admin dashboard, AI-powered conten
 - **POST /delete-comment** - Delete comment (requires auth)
 - **POST /approve-comment** - Approve comment (requires auth)
 
-## Deployment
+## 🚀 Deployment
 
 The application is configured for deployment on Vercel with the included vercel.json configuration files for both client and server.
 
