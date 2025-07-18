@@ -64,6 +64,7 @@ export const getAllBlogs = async (req, res) => {
     const blogs = await Blog.find({ isPublished: true }).sort({
       createdAt: -1,
     });
+
     res.json({ success: true, blogs });
   } catch (error) {
     res.status(500).json({ success: false, message: "Failed to fetch blogs" });
@@ -78,6 +79,7 @@ export const getBlogById = async (req, res) => {
     if (!blog) {
       return res.json({ success: false, message: "Blog not found" });
     }
+
     res.json({ success: true, blog });
   } catch (error) {
     res.status(500).json({ success: false, message: "failed to fetch blog" });
@@ -113,7 +115,6 @@ export const togglePublish = async (req, res) => {
     //-> find blog and get current status
     const blog = await Blog.findById(id);
 
-    //-> Check if blog exists
     if (!blog) {
       return res.json({ success: false, message: "Blog not found" });
     }
@@ -162,7 +163,7 @@ export const generateContent = async (req, res) => {
   try {
     const { prompt } = req.body;
     const content = await main(
-      `Generate a blog content for the topic in simple text format. Topic is ${prompt}`
+      `Generate a blog content for the given topic. Topic title is ${prompt}`
     );
     res.json({ success: true, content });
   } catch (error) {

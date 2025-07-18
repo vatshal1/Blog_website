@@ -16,7 +16,7 @@ import { useAppContext } from "./context/AppContext";
 
 function App() {
   const { token } = useAppContext();
-  console.log(token);
+  // console.log(token);
 
   const appRouter = createBrowserRouter([
     {

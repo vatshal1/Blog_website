@@ -4,6 +4,7 @@ const auth = (req, res, next) => {
   const token = req.headers.authorization;
 
   try {
+    if (!token) throw new Error("Token not found");
     //-> verify token
     jwt.verify(token, process.env.JWT_SECRET);
 
